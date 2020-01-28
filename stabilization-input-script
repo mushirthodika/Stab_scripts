@@ -1,0 +1,168 @@
+#!/bin/bash
+
+#This script was made to facilitate the generation of multiple inputs for
+#resonance stabilization calculations. CSP, NSP and OSP are the exponent 
+#values for diffuse wave functions at alpha=1.00000. These values can be
+#found in the literature or online. 
+
+
+ cs1=0.0798000
+ cs2=0.0399000
+ 
+ cp1=0.1011333
+ cp2=0.0674222
+ cp3=0.0449482
+ cp4=0.0299654
+ cp5=0.0199770
+
+ cd1=0.2750000
+ cd2=0.1375000
+
+
+ ns1=0.1124000
+ ns2=0.0562000
+ 
+ np1=0.1456667
+ np2=0.0971111
+ np3=0.0647407
+ np4=0.0431605
+ np5=0.0287737
+
+ nd1=0.4085000
+ nd2=0.2042500
+
+ os1=0.1511500
+ os2=0.0755750
+ 
+ op1=0.1835333
+ op2=0.1223556
+ op3=0.0815704
+ op4=0.0543803
+ op5=0.0362535
+
+ od1=0.5925000
+ od2=0.2962500
+
+#Change the desired step size for alpha below. 
+
+ Step=0.1
+
+#In the initial input for the resonance stabilization, change the initial 
+#values for CSP, NSP etc to a1, a2 ... 
+
+
+ for i in `seq 1 25`;
+do
+ ALPHA="$(echo "scale=5;($Step*$i)"|bc -l | awk '{printf "%f", $0}')"
+
+
+#For +[2s5p2d] diffuse functions 
+
+        cs1_new="$(echo "scale=5;($ALPHA*$cs1)"|bc -l | awk '{printf "%f", $0}')"
+        cs2_new="$(echo "scale=5;($ALPHA*$cs2)"|bc -l | awk '{printf "%f", $0}')"
+
+        cp1_new="$(echo "scale=5;($ALPHA*$cp1)"|bc -l | awk '{printf "%f", $0}')"
+        cp2_new="$(echo "scale=5;($ALPHA*$cp2)"|bc -l | awk '{printf "%f", $0}')"
+        cp3_new="$(echo "scale=5;($ALPHA*$cp3)"|bc -l | awk '{printf "%f", $0}')"
+        cp4_new="$(echo "scale=5;($ALPHA*$cp4)"|bc -l | awk '{printf "%f", $0}')"
+        cp5_new="$(echo "scale=5;($ALPHA*$cp5)"|bc -l | awk '{printf "%f", $0}')"
+
+        cd1_new="$(echo "scale=5;($ALPHA*$cd1)"|bc -l | awk '{printf "%f", $0}')"
+        cd2_new="$(echo "scale=5;($ALPHA*$cd2)"|bc -l | awk '{printf "%f", $0}')"
+
+
+        ns1_new="$(echo "scale=5;($ALPHA*$ns1)"|bc -l | awk '{printf "%f", $0}')"
+        ns2_new="$(echo "scale=5;($ALPHA*$ns2)"|bc -l | awk '{printf "%f", $0}')"
+
+        np1_new="$(echo "scale=5;($ALPHA*$np1)"|bc -l | awk '{printf "%f", $0}')"
+        np2_new="$(echo "scale=5;($ALPHA*$np2)"|bc -l | awk '{printf "%f", $0}')"
+        np3_new="$(echo "scale=5;($ALPHA*$np3)"|bc -l | awk '{printf "%f", $0}')"
+        np4_new="$(echo "scale=5;($ALPHA*$np4)"|bc -l | awk '{printf "%f", $0}')"
+        np5_new="$(echo "scale=5;($ALPHA*$np5)"|bc -l | awk '{printf "%f", $0}')"
+
+        nd1_new="$(echo "scale=5;($ALPHA*$nd1)"|bc -l | awk '{printf "%f", $0}')"
+        nd2_new="$(echo "scale=5;($ALPHA*$nd2)"|bc -l | awk '{printf "%f", $0}')"
+
+
+        os1_new="$(echo "scale=5;($ALPHA*$os1)"|bc -l | awk '{printf "%f", $0}')"
+        os2_new="$(echo "scale=5;($ALPHA*$os2)"|bc -l | awk '{printf "%f", $0}')"
+
+        op1_new="$(echo "scale=5;($ALPHA*$op1)"|bc -l | awk '{printf "%f", $0}')"
+        op2_new="$(echo "scale=5;($ALPHA*$op2)"|bc -l | awk '{printf "%f", $0}')"
+        op3_new="$(echo "scale=5;($ALPHA*$op3)"|bc -l | awk '{printf "%f", $0}')"
+        op4_new="$(echo "scale=5;($ALPHA*$op4)"|bc -l | awk '{printf "%f", $0}')"
+        op5_new="$(echo "scale=5;($ALPHA*$op5)"|bc -l | awk '{printf "%f", $0}')"
+
+        od1_new="$(echo "scale=5;($ALPHA*$od1)"|bc -l | awk '{printf "%f", $0}')"
+        od2_new="$(echo "scale=5;($ALPHA*$od2)"|bc -l | awk '{printf "%f", $0}')"
+
+#----Replace Variable
+
+        sed s/cs1/$cs1_new/ uracil_input.inp >> Input-$ALPHA-1.inp
+        sed s/cs2/$cs2_new/ Input-$ALPHA-1.inp >> Input-$ALPHA-2.inp
+
+        sed s/cp1/$cp1_new/ Input-$ALPHA-2.inp >> Input-$ALPHA-3.inp
+        sed s/cp2/$cp2_new/ Input-$ALPHA-3.inp >> Input-$ALPHA-4.inp
+        sed s/cp3/$cp3_new/ Input-$ALPHA-4.inp >> Input-$ALPHA-5.inp
+        sed s/cp4/$cp4_new/ Input-$ALPHA-5.inp >> Input-$ALPHA-6.inp
+        sed s/cp5/$cp5_new/ Input-$ALPHA-6.inp >> Input-$ALPHA-7.inp
+
+        sed s/cd1/$cd1_new/ Input-$ALPHA-7.inp >> Input-$ALPHA-8.inp
+        sed s/cd2/$cd2_new/ Input-$ALPHA-8.inp >> Input-$ALPHA-9.inp
+
+#----
+
+        sed s/ns1/$ns1_new/ Input-$ALPHA-9.inp >> Input-$ALPHA-10.inp
+        sed s/ns2/$ns2_new/ Input-$ALPHA-10.inp >> Input-$ALPHA-11.inp
+
+        sed s/np1/$np1_new/ Input-$ALPHA-11.inp >> Input-$ALPHA-12.inp
+        sed s/np2/$np2_new/ Input-$ALPHA-12.inp >> Input-$ALPHA-13.inp
+        sed s/np3/$np3_new/ Input-$ALPHA-13.inp >> Input-$ALPHA-14.inp
+        sed s/np4/$np4_new/ Input-$ALPHA-14.inp >> Input-$ALPHA-15.inp
+        sed s/np5/$np5_new/ Input-$ALPHA-15.inp >> Input-$ALPHA-16.inp
+
+        sed s/nd1/$nd1_new/ Input-$ALPHA-16.inp >> Input-$ALPHA-17.inp
+        sed s/nd2/$nd2_new/ Input-$ALPHA-17.inp >> Input-$ALPHA-18.inp
+
+#----
+
+        sed s/os1/$os1_new/ Input-$ALPHA-18.inp >> Input-$ALPHA-19.inp
+        sed s/os2/$os2_new/ Input-$ALPHA-19.inp >> Input-$ALPHA-20.inp
+
+        sed s/op1/$op1_new/ Input-$ALPHA-20.inp >> Input-$ALPHA-21.inp
+        sed s/op2/$op2_new/ Input-$ALPHA-21.inp >> Input-$ALPHA-22.inp
+        sed s/op3/$op3_new/ Input-$ALPHA-22.inp >> Input-$ALPHA-23.inp
+        sed s/op4/$op4_new/ Input-$ALPHA-23.inp >> Input-$ALPHA-24.inp
+        sed s/op5/$op5_new/ Input-$ALPHA-24.inp >> Input-$ALPHA-25.inp
+
+        sed s/od1/$od1_new/ Input-$ALPHA-25.inp >> Input-$ALPHA-26.inp
+        sed s/od2/$od2_new/ Input-$ALPHA-26.inp >> uracil-cc-pVDZ+2s5p2d-$ALPHA.inp
+
+                rm Input-$ALPHA-1.inp
+                rm Input-$ALPHA-2.inp
+                rm Input-$ALPHA-3.inp
+                rm Input-$ALPHA-4.inp
+                rm Input-$ALPHA-5.inp
+                rm Input-$ALPHA-6.inp
+                rm Input-$ALPHA-7.inp
+                rm Input-$ALPHA-8.inp
+                rm Input-$ALPHA-9.inp
+                rm Input-$ALPHA-10.inp
+                rm Input-$ALPHA-11.inp
+                rm Input-$ALPHA-12.inp
+                rm Input-$ALPHA-13.inp
+                rm Input-$ALPHA-14.inp
+                rm Input-$ALPHA-15.inp
+                rm Input-$ALPHA-16.inp
+                rm Input-$ALPHA-17.inp
+                rm Input-$ALPHA-18.inp
+                rm Input-$ALPHA-19.inp
+                rm Input-$ALPHA-20.inp
+                rm Input-$ALPHA-21.inp
+                rm Input-$ALPHA-22.inp
+                rm Input-$ALPHA-23.inp
+                rm Input-$ALPHA-24.inp
+                rm Input-$ALPHA-25.inp
+                rm Input-$ALPHA-26.inp
+done
+
