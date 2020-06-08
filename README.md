@@ -11,3 +11,5 @@ stab_analysis.m --> MATLAB code for performing (3,3,3) order analytic continuati
 stab_analysis_444.m --> MATLAB code for performing (4,4,4) order analytic continuation.
 
 stab_analysis_555.m --> MATLAB code for performing (5,5,5) order analytic continuation.
+
+stabilization_input_script --> This bash script generates input files for stabilization calculations for a given electronic structure program.
